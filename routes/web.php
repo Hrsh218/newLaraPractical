@@ -4,6 +4,7 @@ use App\Helpers\LogActivity;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\LogActivityController;
+use App\Http\Controllers\QRCodeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,6 +26,7 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+Route::middleware(['auth'])->group(function () {
 Route::get('category/index', [CategoryController::class, 'index'])->name('category.list');
 Route::get('category/create', [CategoryController::class, 'create'])->name('category.create');
 Route::post('category/store', [CategoryController::class, 'store'])->name('category.store');
@@ -38,8 +40,9 @@ Route::put('book/update/{id}', [BookController::class, 'update'])->name('book.up
 Route::post('book/delete/{id}',[BookController::class, 'destroy'])->name('book.delete');
 
 
-// Route::get('qr-code-generate', [LogActivityController::class, 'index'])->name('generate.log');
+Route::get('qr-code-generate', [QRCodeController::class, 'index'])->name('generate.log');
 
 Route::get('logActivity', [LogActivityController::class, 'logActivity'])->name('log.activity.list');
+});
 
 

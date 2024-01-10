@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use BaconQrCode\Encoder\QrCode;
 use BaconQrCode\Renderer\Image\ImagickImageBackEnd;
 use BaconQrCode\Renderer\ImageRenderer;
 use BaconQrCode\Renderer\RendererStyle\RendererStyle;
-use BaconQrCode\Writer;
+use Illuminate\Http\Request;
 
 class QRCodeController extends Controller
 {
@@ -18,14 +16,29 @@ class QRCodeController extends Controller
      */
     public function index()
     {
-        $renderer = new ImageRenderer(
-            new RendererStyle(400),
-            new ImagickImageBackEnd()
-        );
-        $writer = new Writer($renderer);
-        $writer->writeFile('Hello World!', 'qrcode.png');
+            // The URL you want to redirect to
+    $redirectUrl = "https://example.com";
 
-        return view('Qrcode.qrcode');
+    // Create the QR code renderer
+    $renderer = new ImageRenderer(
+        new RendererStyle(400),
+        new ImagickImageBackEnd()
+    );
+
+    // Create the QR code writer
+    $writer = new Writer($renderer);
+
+    // Combine the redirect URL with some additional data if needed
+    $data = json_encode([
+        'url' => $redirectUrl,
+        'additional_data' => 'something',
+    ]);
+
+    // Save the QR code image to public/qrcodes directory
+    $filename = public_path('qrcodes/redirect_qrcode.png');
+    $writer->writeFile($data, $filename);
+
+    // Return a response or redirect as needed
     }
 
     /**

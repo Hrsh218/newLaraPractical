@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    {{ __('You are logged in!') }}
+                    {{ __('You are logged in!') }}<a href="{{route('book.list')}}">Please click here to redirect book list page</a>
                 </div>
             </div>
         </div>
